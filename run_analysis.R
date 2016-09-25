@@ -39,8 +39,6 @@ df <- df[,varIndicies]
 df <- inner_join(df, activityLabels, by = c("activity_id" = "V1"))
 df <- rename(df, activity = V2)
 
-print(names(df))
-
 ## Step 4
 # Appropriately labels the data set with descriptive variable names
 # Replace some abbreviations in the names with easier to understand names
@@ -50,17 +48,12 @@ names(df)<-gsub("Acc", "Accelerometer", names(df))
 names(df)<-gsub("Gyro", "Gyroscope", names(df))
 names(df)<-gsub("Mag", "Magnitude", names(df))
 
-print(names(df))
-
 ## Step 5
 # From the data set, creates a second, independent tidy data set with
 # the average of each variable for each activity and each subject.
 
 molten <- melt(df, id.vars=c("activity_id", "activity", "subject"))
-print(names(molten))
 casted <- dcast(molten, subject + activity ~ variable, mean)
-
-print(names(casted))
 
 # Write output file = tidy data file!
 write.table(casted, "tidy.txt", row.names = F, quote = F)
